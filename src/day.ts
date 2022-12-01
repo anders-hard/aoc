@@ -4,25 +4,23 @@ abstract class Day {
     
     id: number;
 
-    constructor(id: number){
+    protected constructor(id: number){
         this.id = id;
     }
     
-    async partOne(): Promise<string> {
+    async partOne(): Promise<string | number> {
         const content = await fs.promises.readFile(`./inputs/day${this.id}/part1.txt`);
-        const result = this.solveForPartOne(content.toString());
-        return result;
+        return this.solveForPartOne(content.toString());
     }   
 
-    abstract solveForPartOne(input: string) : string;
+    abstract solveForPartOne(input: string) : string | number;
 
-    async partTwo(): Promise<string> {
+    async partTwo(): Promise<string | number> {
         const content = await fs.promises.readFile(`./inputs/day${this.id}/part2.txt`);
-        const result = this.solveForPartTwo(content.toString());
-        return result;
+        return this.solveForPartTwo(content.toString());
     }
 
-    abstract solveForPartTwo(input: string) : string;
+    abstract solveForPartTwo(input: string) : string | number;
 }
 
 export {Day};
