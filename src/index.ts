@@ -1,19 +1,19 @@
 import { Day } from './day';
-import day0 from './day0/index';
+import day1 from './day1/index';
 // MORE IMPORTS HERE
 const days: Day[] = [
-    day0,
+    day1,
     // MORE DAYS HERE
 ];
 
 async function runDay(dayId: number) {
-  const resultPart1 = await days[dayId].partOne();
+  const resultPart1 = await days[dayId - 1].partOne();
   console.log("Part 1 result:\n");
   console.log(resultPart1);
 
   console.log("\n");
 
-  const resultPart2 = await days[dayId].partTwo();
+  const resultPart2 = await days[dayId - 1].partTwo();
   console.log("Part 2 result:\n");
   console.log(resultPart2);
 }
