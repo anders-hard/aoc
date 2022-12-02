@@ -1,6 +1,5 @@
 import { Day } from "../day";
-import { splitByDoubleNewLine, splitByNewLine, splitByNewLineWithMap } from '../utils/stringUtils';
-import { sortAsNumbers, sumArray } from '../utils/numberUtils';
+import { splitByNewLine } from '../utils/stringUtils';
 
 type ELF = 'A' | 'B' | 'C'
 type ME = 'X' | 'Y' | 'Z';
@@ -12,7 +11,6 @@ class Day2 extends Day {
     constructor(){
         super(2);
     }
-
 
     pointsByFigure: { [me in ME]: POINT } = {
         'X': 1,
@@ -71,7 +69,6 @@ class Day2 extends Day {
         let points = 0;
         rounds.forEach(round => {
             const [elf, res] = round.split(' ');
-            console.log(elf, res, this.calcMove(elf as ELF, this.resByChar[res as ME]));
             const me = this.calcMove(elf as ELF, this.resByChar[res as ME]);
             points = points + this.calcPoints(elf as ELF, me);
         })
