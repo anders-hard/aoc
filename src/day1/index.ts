@@ -1,5 +1,5 @@
 import { Day } from "../day";
-import { splitByDoubleNewLine, splitByNewLine, splitByNewLineWithMap } from '../utils/stringUtils';
+import { splitByDoubleNewLine, splitByNewLineWithMap } from '../utils/stringUtils';
 import { sortAsNumbers, sumArray } from '../utils/numberUtils';
 
 class Day1 extends Day {
