@@ -22,17 +22,10 @@ class Day3 extends Day {
     let sum = 0;
     elves.forEach(elf => {
       const [part1, part2] = [elf.slice(0, elf.length / 2), elf.slice(elf.length / 2)];
-      const types: { [ch: string]: boolean } = {};
-      part1.split('').forEach(ch => {
-        types[ch] = true;
-      });
-      let duplicate: string = '';
-      part2.split('').forEach(ch => {
-        if (types[ch]) {
-          duplicate = ch;
-        }
-      })
-      sum += this.getPriority(duplicate);
+      const typesOne = this.getTypes(part1);
+      const typesTwo = this.getTypes(part2);
+      const duplicate = intersect(typesOne, typesTwo);
+      sum += this.getPriority(duplicate.entries().next().value[0]);
     })
     return sum;
   }
