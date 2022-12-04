@@ -2,12 +2,14 @@ import { Day } from './day';
 import day0 from './day0/index';
 import day1 from './day1/index';
 import day2 from './day2/index';
+import day3 from './day3/index';
 // MORE IMPORTS HERE
 const days: Day[] = [
   day0,
   day1,
   day2,
-  // MORE DAYS HERE
+  day3,
+    // MORE DAYS HERE
 ];
 
 async function runDay(dayId: number) {
