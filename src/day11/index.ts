@@ -78,6 +78,25 @@ class Day11 extends Day {
   }
 
   solveForPartOne(): number {
+    Array(20).fill('').forEach(round => {
+      monkeys.forEach(monkey => {
+        monkey.items.forEach(item => {
+          let worry = monkey.op(item);
+          worry = Math.floor(worry / 3);
+          ++monkey.inspectCount;
+          if (monkey.test(worry)) {
+            monkeys[monkey.ifTrue].items.push(worry);
+          } else {
+            monkeys[monkey.ifFalse].items.push(worry);
+          }
+        })
+        monkey.items = [];
+      })
+    });
+    return sortAsNumbers(monkeys.map(monkey => monkey.inspectCount)).reverse().slice(0, 2).reduce((p, c) => c * p, 1);
+  }
+
+  solveForPartTwo(input: string): number {
     Array(10000).fill('').forEach(round => {
       monkeys.forEach(monkey => {
         monkey.items.forEach(item => {
@@ -94,10 +113,6 @@ class Day11 extends Day {
       })
     });
     return sortAsNumbers(monkeys.map(monkey => monkey.inspectCount)).reverse().slice(0, 2).reduce((p, c) => c * p, 1);
-  }
-
-  solveForPartTwo(input: string): string {
-    return input;
   }
 }
 
