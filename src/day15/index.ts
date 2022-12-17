@@ -49,8 +49,43 @@ class Day15 extends Day {
     return count;
   }
 
-  solveForPartTwo(input: string): string {
-    return input;
+  canContainBeacon2(pos: Pos): boolean {
+    if (this.beacons.find(p => p.x === pos.x && p.y === pos.y) || this.sensors.find(p => p.x === pos.x && p.y === pos.y)) {
+      return false;
+    }
+    return !this.sensors.find((sensor, index) => {
+      const beacon = this.beacons[index];
+      return this.getDistance(sensor, beacon) >= this.getDistance(pos, sensor);
+    });
+  }
+
+  found: Pos | undefined = undefined;
+
+  checkPerimeter(pos: Pos, distance: number) {
+    const perimeter: Pos[] = [];
+    for (let i = 0; i <= distance; i++) {
+      perimeter.push(
+          { x: pos.x + i, y: pos.y + distance + 1 - i },
+          { x: pos.x + i, y: pos.y - distance - 1 + i },
+          { x: pos.x - distance - 1 + i, y: pos.y + i },
+          { x: pos.x - distance - 1 + i, y: pos.y - i },
+      );
+    }
+    perimeter.forEach(spot => {
+      if (spot.x <= 4000000 && spot.x >= 0 && spot.y <= 4000000 && spot.y >= 0 && this.canContainBeacon2(spot)) {
+        console.log('found', spot);
+        this.found = spot;
+      }
+    })
+  }
+
+  solveForPartTwo(input: string): number {
+    this.sensors = [];
+    this.beacons = [];
+    const lines = splitByNewLine(input);
+    this.parseInput(lines);
+    this.sensors.forEach((s, index) => this.checkPerimeter(s, this.getDistance(s, this.beacons[index])));
+    return this.found!.x * 4000000 + this.found!.y;
   }
 }
 
