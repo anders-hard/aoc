@@ -7,7 +7,6 @@ enum Wind {
 
 enum Char {
   EMPTY = '.',
-  STONE = '@',
   REST = '#',
 }
 
@@ -51,14 +50,6 @@ class Day17 extends Day {
   toRest(shape: Shape) {
     shape.forEach(ch => this.grid[ch.y][ch.x] = Char.REST);
     this.height = Math.max(this.height, ...shape.map(ch => ch.y + 1));
-
-    /*
-    if (this.height > 1000) {
-      this.height -= 1000;
-      this.grid.slice(0, 1000);
-      this.grid.push(...Array(1000).fill('').map(() => Array(7).fill(Char.EMPTY)))
-    }
-    */
   }
 
   spawnShape(i: number): Shape {
@@ -72,8 +63,9 @@ class Day17 extends Day {
     ][i % 5];
   }
 
-  printGrid() {
-    console.log(this.grid.map(row => row.join('')).slice(0, this.height).reverse().join('\n') + '\n');
+  printGrid(prev: number = 0) {
+    console.log(this.grid.slice(prev, prev + 10).map(row => row.join('')).reverse().join('\n') + '\n');
+    console.log(this.grid.slice(this.height - 10, this.height).map(row => row.join('')).reverse().join('\n') + '\n');
   }
 
   solveForPartOne(input: string): number {
@@ -84,22 +76,46 @@ class Day17 extends Day {
       const shape = this.spawnShape(i);
       let resting = false;
       while (!resting) {
-        // console.log('before blow', tick, wind[tick % wind.length], shape);
         this.blow(wind[tick % wind.length], shape);
-        // console.log('after blow',  tick, wind[tick % wind.length], shape);
         resting = this.fall(shape);
-        // console.log('fall', shape);
         ++tick;
       }
       this.toRest(shape);
-      // this.printGrid();
     }
 
     return this.height;
   }
 
-  solveForPartTwo(input: string): string {
-    return input;
+  solveForPartTwo(input: string): number {
+    this.height = 0;
+    // this.steps = (1000000000000 - 400) % 1400;
+    //this.steps = (1000000000000 - 50455) % 353185;
+    this.steps = 50455 * 10;
+    this.grid = Array(1000000).fill('').map(() => Array(7).fill(Char.EMPTY));
+
+    const wind: Wind[] = input.trim().split('') as Wind[];
+    let tick = 0;
+    let prev = 0;
+
+    for (let i = 0; i < this.steps; ++i) {
+      if (i !== 0 && i % 50455 === 0) {
+        this.printGrid(prev);
+        console.log(this.height - prev);
+        prev = this.height;
+      }
+      const shape = this.spawnShape(i);
+      let resting = false;
+      while (!resting) {
+        this.blow(wind[tick % wind.length], shape);
+        resting = this.fall(shape);
+        ++tick;
+      }
+      this.toRest(shape);
+    }
+    // this.printGrid();
+    // return 608 + 2120 * Math.floor((1000000000000 - 400) / 1400) + this.height;
+    // return 76409 + 534823 * Math.floor((1000000000000 - 50455) / 353185) + this.height;
+    return this.height;
   }
 }
 
