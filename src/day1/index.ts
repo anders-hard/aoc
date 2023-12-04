@@ -1,6 +1,5 @@
 import { Day } from "../day";
 import {reverseString, splitByNewLine} from "../utils/stringUtils";
-import {match} from "assert";
 
 const numbers = /[0123456789]/;
 const numbers2 = /(?=([0123456789]|one|two|three|four|five|six|seven|eight|nine))/g;
