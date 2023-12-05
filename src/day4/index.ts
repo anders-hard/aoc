@@ -22,9 +22,8 @@ const parseCard = (line: string): Card => {
 
 const getValueOfCard2 = (allCards: Card[], index: number): number => {
   const card = allCards[index];
-  if (card.value) return card.value;
   const myWinningNumbers = intersect(new Set(card.winningNumbers), new Set(card.yourNumbers));
-  return [...myWinningNumbers].reduce((p, c, i) => p + getValueOfCard2(allCards, index + i + 1), 1);
+  return [...myWinningNumbers].reduce((p, c, i) => p + allCards[index + i + 1].value!, 1);
 }
 
 class Day4 extends Day {
